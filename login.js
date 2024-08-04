@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const password = document.getElementById('password').value;
 
         // Simple authentication (for demonstration purposes)
-        if (username === 'admin' && password === 'password') {
+        if (username === 'admin' && password === 'pass1234') {
             localStorage.setItem('loggedIn', 'true');
             window.location.href = 'index.html';
         } else {
