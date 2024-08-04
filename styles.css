@@ -230,3 +230,30 @@ footer {
 footer p {
     margin: 0.5rem 0;
 }
+
+/* Styles for Edit and Delete buttons */
+.edit-btn {
+    background-color: #28a745; /* Green */
+    border: none;
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.edit-btn:hover {
+    background-color: #218838;
+}
+
+.delete-btn {
+    background-color: #dc3545; /* Red */
+    border: none;
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.delete-btn:hover {
+    background-color: #c82333;
+}

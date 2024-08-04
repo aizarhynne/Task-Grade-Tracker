@@ -45,6 +45,7 @@ function addTaskToDOM(task) {
         <td contenteditable="true" class="m2-cell"></td>
         <td contenteditable="true" class="m3-cell"></td>
         <td class="final-grade-cell"></td>
+        <td><button class="edit-btn">Edit</button></td>
         <td><button class="delete-btn">Delete</button></td>
     `;
 }
@@ -60,13 +61,22 @@ todoForm.addEventListener('submit', function(e) {
     }
 });
 
-// Event listener for delete buttons in the table
+// Event listener for delete and edit buttons
 tasksTableBody.addEventListener('click', function(e) {
     if (e.target.classList.contains('delete-btn')) {
         const row = e.target.parentElement.parentElement;
         const task = row.cells[0].textContent.trim();
         deleteTaskFromLocalStorage(task);
         row.remove();
+    } else if (e.target.classList.contains('edit-btn')) {
+        const row = e.target.parentElement.parentElement;
+        const oldTask = row.dataset.task;
+        const newTask = prompt("Edit your task:", oldTask);
+        if (newTask) {
+            editTaskInLocalStorage(oldTask, newTask);
+            row.dataset.task = newTask;
+            row.cells[0].textContent = newTask;
+        }
     }
 });
 
