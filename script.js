@@ -90,8 +90,22 @@ tasksTableBody.addEventListener('input', function(e) {
             editTaskInLocalStorage(oldTask, newTask);
             row.dataset.task = newTask;
         }
+    } else if (e.target.classList.contains('m1-cell') || e.target.classList.contains('m2-cell') || e.target.classList.contains('m3-cell')) {
+        const row = e.target.parentElement;
+        calculateFinalGrade(row);
     }
 });
+
+// Calculate final grade
+function calculateFinalGrade(row) {
+    const m1 = parseFloat(row.querySelector('.m1-cell').textContent) || 0;
+    const m2 = parseFloat(row.querySelector('.m2-cell').textContent) || 0;
+    const m3 = parseFloat(row.querySelector('.m3-cell').textContent) || 0;
+    const finalGradeCell = row.querySelector('.final-grade-cell');
+    const numberOfGrades = [m1, m2, m3].filter(grade => grade > 0).length;
+    const finalGrade = (m1 + m2 + m3) / (numberOfGrades > 0 ? numberOfGrades : 1);
+    finalGradeCell.textContent = finalGrade.toFixed(2);
+}
 
 function deleteTaskFromLocalStorage(task) {
     let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
