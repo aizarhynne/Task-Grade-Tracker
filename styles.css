@@ -1,0 +1,232 @@
+html, body {
+    height: 100%;    /* Ensures the html and body take up the full height */
+    margin: 0;       /* Removes default margin */
+    font-family: Arial, sans-serif;
+}
+
+
+/* Existing styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #d0e7f9; /* Light blue background color */
+    display: flex;
+    flex-direction: column; /* Updated to column for vertical alignment */
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.login-container {
+    background: white;
+    padding: 2rem;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 50%; /* Set the width to 50% */
+    max-width: 400px; /* Optional: set a max-width */
+    margin: 0 auto; /* Center the container */
+    
+}
+
+.login-container h1 {
+    
+    margin-bottom: 1rem;
+    
+}
+
+#login-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+
+#login-form input {
+    width: 80%;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#login-form button {
+    padding: 0.5rem 1rem;
+    border: none;
+    background: #28a745;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#login-form button:hover {
+    background: #218838;
+}
+
+.container {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);  
+    margin: 4rem auto; /* Center the container */
+}
+
+.hidden {
+    display: none;
+}
+
+.navbar {
+    width: 100%;
+    background-color: #B692C2;
+    overflow: hidden;
+    display: flex;
+    position: fixed; /* Make it fixed */
+    top: 0; /* Position it at the top */
+    z-index: 1000; /* Ensure it stays on top */
+    display: flex;
+    justify-content: flex-end; /* Move navbar items to the right */
+    align-items: center;
+    padding: 0 20px; /* Add padding to the sides */
+    
+}
+
+.navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 5px;
+    align-items: right;
+    padding: 10px 20px;
+    border-spacing: space-inbetween;
+    display: flex;
+    
+}
+
+.navbar li {
+    /*display: inline;*/
+    margin: 0 5px;
+}
+
+.navbar li a {
+    display: inline-block;
+    color: black;
+    text-align: right;
+    padding: 5px 12px;
+    text-decoration: none;
+    
+}
+
+
+h1, h2 {
+    text-align: center;
+}
+
+form {
+    display: flex;
+    margin-bottom: 1rem;
+}
+
+input {
+    flex: 1;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 5px 0 0 5px;
+}
+
+button {
+    padding: 0.5rem;
+    border: none;
+    background: #28a745;
+    color: white;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #218838;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    background: #f4f4f4;
+    margin-bottom: 0.5rem;
+    padding: 0.5rem;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+li.completed {
+    text-decoration: line-through;
+    color: #aaa;
+}
+
+li button {
+    background: #dc3545;
+    border: none;
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+li button:hover {
+    background: #c82333;
+}
+
+li button:nth-child(1) {
+    background: #ffc107;
+    color: black;
+}
+
+li button:nth-child(1):hover {
+    background: #e0a800;
+}
+
+/* New styles for the table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+th, td {
+    border: 1px solid #18031f;
+    padding: 0.5rem;
+    text-align: center;
+}
+
+th {
+    background-color: #FFDFD6;
+}
+
+td.task-cell {
+    background-color: #E3A5C7; /* Light Pink */
+}
+
+td.m1-cell, td.m2-cell, td.m3-cell {
+    background-color: #B692C2; /* Light Red */
+}
+
+td.final-grade-cell {
+    background-color: #c7a9f1; /* Light Peach */
+}
+
+footer {
+    background-color: #694F8E;
+    color: white;
+    padding: 0.5rem;
+    text-align: center;
+    width: 100%;
+    position: relative; /* Changed to relative */
+    bottom: 0;
+    margin-top: auto; /* Added margin-top auto */
+}
+
+footer p {
+    margin: 0.5rem 0;
+}

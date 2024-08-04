@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Task Manager & Grade Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <ul>
+            <li><a href="#added-tasks">Added Tasks</a></li>
+            <li><a href="#task-table">Task Table</a></li>
+            <li><a href="#footer">Contact</a></li>
+            <li><a href="#" id="logout">Logout</a></li>
+        </ul>
+    </nav>
+    <div class="container hidden" id="app-container">
+        <h1>Academic Task Manager & Grade Tracker</h1>
+        <form id="todo-form">
+            <input type="text" id="todo-input" placeholder="Add a new task">
+            <button type="submit">Add</button>
+        </form>
+        <ul id="todo-list" class="added-tasks" id="added-tasks"></ul>
+        <h2 id="task-table">Tasks Table</h2>
+        <table id="tasks-table">
+            <thead>
+                <tr>
+                    <th>Task</th>
+                    <th>Week 1</th>
+                    <th>Week 2</th>
+                    <th>Week 3</th>
+                    <th>Week 4</th>
+                    <th>Week 5</th>
+                    <th>Week 6</th>
+                    <th>Week 7</th>
+                    <th>Week 8</th>
+                    <th>Week 9</th>
+                    <th>Week 10</th>
+                    <th>Week 11</th>
+                    <th>Week 12</th>
+                    <th>Week 13</th>
+                    <th>Week 14</th>
+                    <th>M1</th>
+                    <th>M2</th>
+                    <th>M3</th>
+                    <th>Final Grade</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Dynamic rows will be added here -->
+            </tbody>
+        </table>
+    </div>
+    <footer id="footer">
+        <p>&copy; 2024 Academic Task Manager & Grade Tracker. All rights reserved.</p>
+        <p>Name: Aiza Molo</p>
+        <p>Contact: 0527356743</p>
+        <p>Email: aizarhynne@gmail.com</p>
+    </footer>
+    <script>
+        // Check if the user is logged in
+        document.addEventListener('DOMContentLoaded', () => {
+            const loggedIn = localStorage.getItem('loggedIn');
+            if (loggedIn === 'true') {
+                document.getElementById('app-container').classList.remove('hidden');
+            } else {
+                window.location.href = 'login.html';
+            }
+
+            document.getElementById('logout').addEventListener('click', (e) => {
+                e.preventDefault();
+                localStorage.removeItem('loggedIn');
+                window.location.href = 'login.html';
+            });
+        });
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
