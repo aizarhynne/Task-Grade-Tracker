@@ -6,10 +6,8 @@ const tasksTableBody = document.getElementById('tasks-table').getElementsByTagNa
 // Load tasks from local storage
 document.addEventListener('DOMContentLoaded', loadTasks);
 
-// Save task to local storage
-function saveTaskToLocalStorage(task) {
-    let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-    tasks.push(task);
+// Save tasks to local storage
+function saveTasksToLocalStorage(tasks) {
     localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
@@ -21,30 +19,48 @@ function loadTasks() {
     });
 }
 
+// Save task data to local storage
+function saveTaskDataToLocalStorage(taskData) {
+    let tasksData = JSON.parse(localStorage.getItem('tasksData')) || [];
+    tasksData.push(taskData);
+    localStorage.setItem('tasksData', JSON.stringify(tasksData));
+}
+
+// Load task data from local storage
+function loadTaskData() {
+    let tasksData = JSON.parse(localStorage.getItem('tasksData')) || [];
+    tasksData.forEach(taskData => {
+        addTaskDataToDOM(taskData);
+    });
+}
+
 // Add task to DOM
 function addTaskToDOM(task) {
     const row = tasksTableBody.insertRow();
     row.dataset.task = task; // Store the original task in the row's dataset
     row.innerHTML = `
         <td class="task-cell" contenteditable="true">${task}</td>
-        <td contenteditable="true"></td>
-        <td contenteditable="true"></td>
-        <td contenteditable="true"></td>
-        <td contenteditable="true"></td>
-        <td contenteditable="true"></td>
-        <td contenteditable="true"></td>
-        <td contenteditable="true"></td>
-        <td contenteditable="true"></td>
-        <td contenteditable="true"></td>
-        <td contenteditable="true"></td>
-        <td contenteditable="true"></td>
-        <td contenteditable="true"></td>
-        <td contenteditable="true"></td>
-        <td contenteditable="true"></td>
+        ${Array.from({ length: 14 }, (_, i) => `<td contenteditable="true" class="week-cell week-${i + 1}-cell"></td>`).join('')}
         <td contenteditable="true" class="m1-cell"></td>
         <td contenteditable="true" class="m2-cell"></td>
         <td contenteditable="true" class="m3-cell"></td>
         <td class="final-grade-cell"></td>
+        <td><button class="edit-btn">Edit</button></td>
+        <td><button class="delete-btn">Delete</button></td>
+    `;
+}
+
+// Add task data to DOM
+function addTaskDataToDOM(taskData) {
+    const row = tasksTableBody.insertRow();
+    row.dataset.task = taskData.task;
+    row.innerHTML = `
+        <td class="task-cell" contenteditable="true">${taskData.task}</td>
+        ${taskData.weeks.map((week, i) => `<td contenteditable="true" class="week-cell week-${i + 1}-cell">${week}</td>`).join('')}
+        <td contenteditable="true" class="m1-cell">${taskData.m1}</td>
+        <td contenteditable="true" class="m2-cell">${taskData.m2}</td>
+        <td contenteditable="true" class="m3-cell">${taskData.m3}</td>
+        <td class="final-grade-cell">${taskData.finalGrade}</td>
         <td><button class="edit-btn">Edit</button></td>
         <td><button class="delete-btn">Delete</button></td>
     `;
@@ -55,8 +71,16 @@ todoForm.addEventListener('submit', function(e) {
     e.preventDefault();
     const task = todoInput.value.trim();
     if (task) {
+        const taskData = {
+            task,
+            weeks: Array(14).fill(''),
+            m1: '',
+            m2: '',
+            m3: '',
+            finalGrade: ''
+        };
         addTaskToDOM(task);
-        saveTaskToLocalStorage(task);
+        saveTaskDataToLocalStorage(taskData);
         todoInput.value = '';
     }
 });
@@ -90,9 +114,10 @@ tasksTableBody.addEventListener('input', function(e) {
             editTaskInLocalStorage(oldTask, newTask);
             row.dataset.task = newTask;
         }
-    } else if (e.target.classList.contains('m1-cell') || e.target.classList.contains('m2-cell') || e.target.classList.contains('m3-cell')) {
+    } else if (e.target.classList.contains('week-cell') || e.target.classList.contains('m1-cell') || e.target.classList.contains('m2-cell') || e.target.classList.contains('m3-cell')) {
         const row = e.target.parentElement;
         calculateFinalGrade(row);
+        saveUpdatedTaskDataToLocalStorage(row);
     }
 });
 
@@ -114,17 +139,49 @@ function calculateFinalGrade(row) {
     }
 }
 
+// Save updated task data to local storage
+function saveUpdatedTaskDataToLocalStorage(row) {
+    const task = row.dataset.task;
+    let tasksData = JSON.parse(localStorage.getItem('tasksData')) || [];
+    const index = tasksData.findIndex(data => data.task === task);
+
+    if (index !== -1) {
+        tasksData[index] = {
+            task,
+            weeks: Array.from(row.querySelectorAll('.week-cell')).map(cell => cell.textContent),
+            m1: row.querySelector('.m1-cell').textContent,
+            m2: row.querySelector('.m2-cell').textContent,
+            m3: row.querySelector('.m3-cell').textContent,
+            finalGrade: row.querySelector('.final-grade-cell').textContent
+        };
+    } else {
+        tasksData.push({
+            task,
+            weeks: Array.from(row.querySelectorAll('.week-cell')).map(cell => cell.textContent),
+            m1: row.querySelector('.m1-cell').textContent,
+            m2: row.querySelector('.m2-cell').textContent,
+            m3: row.querySelector('.m3-cell').textContent,
+            finalGrade: row.querySelector('.final-grade-cell').textContent
+        });
+    }
+
+    localStorage.setItem('tasksData', JSON.stringify(tasksData));
+}
+
 function deleteTaskFromLocalStorage(task) {
-    let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-    tasks = tasks.filter(t => t !== task);
-    localStorage.setItem('tasks', JSON.stringify(tasks));
+    let tasksData = JSON.parse(localStorage.getItem('tasksData')) || [];
+    tasksData = tasksData.filter(data => data.task !== task);
+    localStorage.setItem('tasksData', JSON.stringify(tasksData));
 }
 
 function editTaskInLocalStorage(oldTask, newTask) {
-    let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-    const index = tasks.indexOf(oldTask);
+    let tasksData = JSON.parse(localStorage.getItem('tasksData')) || [];
+    const index = tasksData.findIndex(data => data.task === oldTask);
     if (index !== -1) {
-        tasks[index] = newTask;
+        tasksData[index].task = newTask;
     }
-    localStorage.setItem('tasks', JSON.stringify(tasks));
+    localStorage.setItem('tasksData', JSON.stringify(tasksData));
 }
+
+// Load initial data
+document.addEventListener('DOMContentLoaded', loadTaskData);
